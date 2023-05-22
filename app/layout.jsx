@@ -3,6 +3,8 @@
 import robotoFont from "@/constants/localFonts";
 import "./globals.css";
 import Header from "./Header";
+import { Toaster } from "react-hot-toast";
+import Providers from "./Providers";
 
 export const metadata = {
 	title: "Create Next App",
@@ -17,7 +19,10 @@ export default function RootLayout({ children }) {
 				className={`${robotoFont.variable} font-sans`}
 			>
 				<Header />
-				<main className="container">{children}</main>
+				<Providers>
+					<main className="container">{children}</main>
+				</Providers>
+				<Toaster />
 			</body>
 		</html>
 	);
