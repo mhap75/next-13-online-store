@@ -1,11 +1,8 @@
-'use client'
+"use client";
 
 import robotoFont from "@/constants/localFonts";
 import "./globals.css";
-import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/system";
-import { darkTheme } from "./theme/themes";
-
+import Header from "./Header";
 
 export const metadata = {
 	title: "Create Next App",
@@ -19,10 +16,8 @@ export default function RootLayout({ children }) {
 				suppressHydrationWarning={true}
 				className={`${robotoFont.variable} font-sans`}
 			>
-				{/* <ThemeProvider theme={darkTheme}> */}
-					{/* <CssBaseline /> */}
-					{children}
-				{/* </ThemeProvider> */}
+				<Header />
+				<main className="container">{children}</main>
 			</body>
 		</html>
 	);
