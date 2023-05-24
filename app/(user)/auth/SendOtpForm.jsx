@@ -18,7 +18,7 @@ function SendOtpForm({ onChange, phoneValue, onSubmit, loading }) {
 
 	return (
 		<Card
-			className="max-w-md mx-auto my-5"
+			className="max-w-md !mx-auto !my-5"
 			title="Sign up or log in"
 			hoverable
 		>
@@ -65,7 +65,7 @@ function SendOtpForm({ onChange, phoneValue, onSubmit, loading }) {
 				<Button
 					loading={loading}
 					htmlType="submit"
-					className="bg-blue-500"
+					className="bg-primary-500"
 					type="primary"
 				>
 					Send code

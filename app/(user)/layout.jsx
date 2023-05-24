@@ -1,10 +1,11 @@
 "use client";
 
 import robotoFont from "@/constants/localFonts";
-import "./globals.css";
-import Header from "./Header";
+import "../globals.css";
+import Header from "../Header";
 import { Toaster } from "react-hot-toast";
-import Providers from "./Providers";
+import Providers from "../Providers";
+import { ConfigProvider } from "antd";
 
 export const metadata = {
 	title: "Create Next App",
@@ -18,11 +19,19 @@ export default function RootLayout({ children }) {
 				suppressHydrationWarning={true}
 				className={`${robotoFont.variable} font-sans`}
 			>
-				<Header />
-				<Providers>
-					<main className="container">{children}</main>
-				</Providers>
-				<Toaster />
+				<ConfigProvider
+					theme={{
+						token: {
+							colorPrimary: "#058dc7",
+						},
+					}}
+				>
+					<Providers>
+					<Header />
+						<main className="container">{children}</main>
+					</Providers>
+					<Toaster />
+				</ConfigProvider>
 			</body>
 		</html>
 	);
