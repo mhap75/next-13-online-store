@@ -4,7 +4,7 @@ import MyInput from "@/components/common/Input";
 import { usePersistUser } from "@/hooks/useAuth";
 // import Spinner from "@/components/common/Spinner";
 
-import { updateProfile } from "@/services/auth.";
+import { updateProfile } from "@/services/auth";
 import { MailOutlined, PhoneOutlined, UserOutlined } from "@ant-design/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Avatar, Button, Card, Skeleton } from "antd";
@@ -30,10 +30,10 @@ function Dashboard() {
 
 		try {
 			const data = await mutateAsync({ name, email, biography });
-            queryClient.invalidateQueries({queryKey: ["persist-user"]})
-            toast.success(data.data.data.message);
+			queryClient.invalidateQueries({ queryKey: ["persist-user"] });
+			toast.success(data.data.data.message);
 		} catch (error) {
-            toast.error(error?.response?.data?.message);
+			toast.error(error?.response?.data?.message);
 		}
 	};
 

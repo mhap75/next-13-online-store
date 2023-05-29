@@ -13,7 +13,6 @@ app.interceptors.request.use(
 app.interceptors.response.use(
 	(res) => res,
 	async (err) => {
-		console.log(err);
 		const originalConfig = err.config;
 		if (err.response.status === 401 && !originalConfig._retry) {
 			originalConfig._retry = true;

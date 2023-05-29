@@ -1,16 +1,17 @@
 "use client";
 
-import { persistUser } from "@/services/auth.";
+import { persistUser } from "@/services/auth";
 import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar, Badge, Button, Dropdown, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import logo from "../assets/next.svg"
 
 const Header = () => {
 	const navItems = [
 		{ title: "Home", path: "/" },
-		{ title: "About", path: "/about" },
+		{ title: "Products", path: "/products" },
 	];
 	const { data, error, isLoading } = useQuery({
 		queryKey: ["persist-user"],
@@ -41,22 +42,6 @@ const Header = () => {
 			key: "1",
 		},
 		{
-			label: (
-				<Badge>
-					<Link href="/settings">Settings</Link>
-				</Badge>
-			),
-			key: "2",
-		},
-		{
-			label: (
-				<Badge dot={cart && cart.payDetail.productIds.length}>
-					<Link href="/cart">Cart</Link>
-				</Badge>
-			),
-			key: "3",
-		},
-		{
 			type: "divider",
 		},
 		{
@@ -67,12 +52,12 @@ const Header = () => {
 	];
 
 	return (
-		<header className="shadow-md">
+		<header className="shadow-md bg-gradient-to-l from-sky-50 to-blue-400">
 			<nav className="container flex justify-between items-center px-5 min-h-[65px]">
 				<Link href="/">
 					<Image
 						className="align-middle"
-						src="./next.svg"
+						src={logo}
 						height={50}
 						width={120}
 						alt="logo"

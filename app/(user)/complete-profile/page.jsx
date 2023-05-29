@@ -7,29 +7,29 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { compProfile } from "@/services/auth.";
+import { compProfile } from "@/services/auth";
 
 function CompleteProfile({ onChange, onSubmit }) {
 	const [formVals, setFormVals] = useState({
 		name: "",
 		email: "",
 		address: "",
-        website: "",
-        phoneNumber: "09923346976"
-    });
-    const { isLoading, mutateAsync } = useMutation({
+		website: "",
+		phoneNumber: "09923346976",
+	});
+	const { isLoading, mutateAsync } = useMutation({
 		mutationFn: compProfile,
 	});
-    const router = useRouter()
+	const router = useRouter();
 
 	const sendSubmitData = async (e) => {
-        e.preventDefault();
-        const {name, email} = formVals
+		e.preventDefault();
+		const { name, email } = formVals;
 
 		try {
-			const data = await mutateAsync({name, email});;
+			const data = await mutateAsync({ name, email });
 			toast.success(data.data.data.message);
-            router.push("/")
+			router.push("/");
 		} catch (error) {
 			toast.error(error?.response?.data?.message);
 		}
@@ -50,8 +50,8 @@ function CompleteProfile({ onChange, onSubmit }) {
 					htmlType="submit"
 					className="bg-primary-500 w-[95%] mx-auto"
 					type="primary"
-                    key="submit"
-                    onClick={sendSubmitData}
+					key="submit"
+					onClick={sendSubmitData}
 				>
 					Submit changes
 				</Button>,

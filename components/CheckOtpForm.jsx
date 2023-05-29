@@ -2,16 +2,11 @@
 
 import { RedoOutlined } from "@ant-design/icons";
 import { Button, Card } from "antd";
-import OTPInput, { ResendOTP } from "otp-input-react";
+import OTPInput from "otp-input-react";
 import { useEffect, useState } from "react";
 
 function CheckOtpForm({ onSubmit, loading, OTP, setOTP, onGoBack, time, onResend }) {
 	const [isDisResend, setIsDisResend] = useState(true);
-
-	const sendSubmitData = (e) => {
-		e.preventDefault();
-		onSubmit();
-	};
 
 	useEffect(() => {
 		if (time < 1) {
@@ -26,7 +21,7 @@ function CheckOtpForm({ onSubmit, loading, OTP, setOTP, onGoBack, time, onResend
 			hoverable
 			extra={<Button onClick={onGoBack}>Go back</Button>}
 		>
-			<form className="flex flex-col gap-2" onSubmit={sendSubmitData}>
+			<form className="flex flex-col gap-2" onSubmit={onSubmit}>
 				<OTPInput
 					value={OTP}
 					onChange={setOTP}

@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body
 				suppressHydrationWarning={true}
-				className={`${robotoFont.variable} font-sans`}
+				className={`${robotoFont.variable} font-sans bg-gradient-to-r from-cyan-100 to-blue-400`}
 			>
 				<ConfigProvider
 					theme={{
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
 					}}
 				>
 					<Providers>
-					<Header />
+						<Header />
 						<main className="container">{children}</main>
 					</Providers>
 					<Toaster />
