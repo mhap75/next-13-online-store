@@ -65,7 +65,7 @@ function FilterProduct({ categories }) {
 					onCheck={onCheck}
 					treeData={treeData}
 					defaultExpandAll={true}
-					switcherIcon={<DownCircleFilled />}
+					switcherIcon={<DownCircleFilled style={{fontSize: "1rem"}} />}
 				/>
 			</Card>
 		</div>

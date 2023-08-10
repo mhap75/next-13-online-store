@@ -7,7 +7,6 @@ export const dynamicParams = false;
 async function Product({ params }) {
 	const { slug } = params;
 	const { product } = await getProduct(slug);
-	console.log(product);
 	return <ProductDetail product={product} />;
 }
 

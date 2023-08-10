@@ -39,7 +39,7 @@ function SortProduct() {
 	};
 
 	return (
-		<Card className="m-2 col-span-4">
+		<Card className="m-2 col-span-4 lg:col-span-5">
 			<div className="flex items-center gap-2">
 				<div>
 					<SortAscendingOutlined /> Sort by:

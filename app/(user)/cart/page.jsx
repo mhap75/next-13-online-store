@@ -1,7 +1,7 @@
 "use client";
 
 import { usePersistUser } from "@/hooks/useAuth";
-import { addToCart, remFromCart } from "@/services/product";
+import { addToCart, createPayment, remFromCart } from "@/services/product";
 import { priceSeparator } from "@/utils/stringFunctions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Card, Input, Space, Table } from "antd";
@@ -42,6 +42,10 @@ function Cart() {
 	const { isLoading: addLoading, mutateAsync: mutateAddAsync } = useMutation({
 		mutationFn: addToCart,
 	});
+	const { isLoading: crtPayLoading, mutateAsync: mutateCPAsync } =
+		useMutation({
+			mutationFn: createPayment,
+		});
 	const queryClient = useQueryClient();
 	const handleRemFromCart = async (id) => {
 		try {
@@ -56,6 +60,16 @@ function Cart() {
 	const handleAddToCart = async (id) => {
 		try {
 			const { message } = await mutateAddAsync(id);
+			toast.success(message);
+			queryClient.invalidateQueries({ queryKey: ["persist-user"] });
+		} catch (error) {
+			toast.error(error?.response?.data?.message);
+		}
+	};
+
+	const handleCreatePayment = async () => {
+		try {
+			const { message } = await mutateCPAsync();
 			toast.success(message);
 			queryClient.invalidateQueries({ queryKey: ["persist-user"] });
 		} catch (error) {
@@ -137,9 +151,14 @@ function Cart() {
 							/>
 							<Button>Apply coupon</Button>
 						</Space.Compact>
-						<Link href="/cart/checkout">
-							<Button>Proceed to checkout</Button>
-						</Link>
+						{/* <Link href="/cart/checkout"> */}
+						<Button
+							loading={crtPayLoading}
+							onClick={handleCreatePayment}
+						>
+							Proceed to checkout
+						</Button>
+						{/* </Link> */}
 					</div>
 				)}
 				columns={columns}

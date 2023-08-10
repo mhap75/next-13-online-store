@@ -5,13 +5,19 @@ import { getProductList } from "@/services/product";
 import { Suspense } from "react";
 import FilterProduct from "./FilterProduct";
 import SortProduct from "./SortProduct";
+import { cookies } from "next/headers";
+import { cookieToString } from "@/utils/cookieToString";
 export const dynamic = "force-dynamic";
 
 async function Products({ searchParams }) {
+	const cookieStore = cookies();
+	const strCookies = cookieToString(cookieStore);
 	const { categories } = await getCatList().then(({ data }) => data.data);
 	const { products } = await getProductList(
-		queryString.stringify(searchParams)
+		queryString.stringify(searchParams),
+		strCookies
 	);
+
 	return (
 		<section className="grid grid-cols-6 md:grid-rows-[min-content_minmax(300px,_1fr)]">
 			<Suspense fallback={<p>Loading. . .</p>}>

@@ -3,22 +3,24 @@ import {
 	AppstoreOutlined,
 	CheckCircleOutlined,
 	EuroCircleOutlined,
+	GiftOutlined,
 	HomeOutlined,
 	InfoOutlined,
 	MailOutlined,
 	MoneyCollectOutlined,
+	SafetyOutlined,
 	SettingOutlined,
+	ShopOutlined,
 	SlidersOutlined,
 	SmileOutlined,
 	UserOutlined,
+	UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Menu } from "antd";
+import { Button, Card, Menu, Tag } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import logo from "../../assets/next.svg"
-
-
+import logo from "../../assets/next.svg";
 
 function getItem(label, key, icon, children, type) {
 	return {
@@ -30,24 +32,37 @@ function getItem(label, key, icon, children, type) {
 	};
 }
 const items = [
-	getItem("Profile", "sub1", <UserOutlined />, [
-		getItem(<Link href="/profile">Home</Link>, "1", <HomeOutlined />),
+	getItem("Admin Profile", "sub1", <UserOutlined />, [
+		getItem(<Link href="/admin">Home</Link>, "1", <HomeOutlined />),
 		getItem(
-			<Link href="/profile/dashboard">Dashboard</Link>,
+			<Link href="/admin/dashboard">Dashboard</Link>,
 			"2",
 			<SlidersOutlined />
 		),
 		getItem(
-			<Link href="/profile/orders">Orders</Link>,
+			<Link href="/admin/users">Users</Link>,
 			"3",
+			<UsergroupAddOutlined />
+		),
+		getItem(
+			<Link href="/admin/orders">Orders</Link>,
+			"4",
 			<AppstoreOutlined />
 		),
-		getItem("Billing", "4", <EuroCircleOutlined />),
-		getItem("Messages", "5", <MailOutlined />),
+		getItem(
+			<Link href="/admin/coupons">Coupons</Link>,
+			"5",
+			<GiftOutlined />
+		),
+		getItem(
+			<Link href="/admin/products">Products</Link>,
+			"6",
+			<ShopOutlined />
+		),
 	]),
 	getItem("Settings", "sub4", <SettingOutlined />, [
 		getItem(
-			<Link href="/profile/info">Your info</Link>,
+			<Link href="/admin/info">Your info</Link>,
 			"9",
 			<SmileOutlined />
 		),
@@ -78,13 +93,22 @@ const SideBar = () => {
 			className="m-2"
 			title={
 				<Link href="/">
-					<Image
-						src={logo}
-						width={100}
-						height={50}
-						alt="logo"
-					/>
+					<Image src={logo} width={100} height={50} alt="logo" />
 				</Link>
+			}
+			extra={
+				<Tag
+					icon={
+						<SafetyOutlined
+							style={{ color: "green", fontSize: "1rem" }}
+						/>
+					}
+					color="success"
+					bordered={false}
+					className="flex"
+				>
+					Admin
+				</Tag>
 			}
 		>
 			<Menu

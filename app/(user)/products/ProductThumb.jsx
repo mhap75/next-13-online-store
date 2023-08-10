@@ -1,9 +1,11 @@
 "use client";
 
 import { usePersistUser } from "@/hooks/useAuth";
-import { addToCart } from "@/services/product";
+import { addToCart, like } from "@/services/product";
 import {
 	EllipsisOutlined,
+	HeartFilled,
+	HeartOutlined,
 	LoadingOutlined,
 	ShoppingCartOutlined,
 } from "@ant-design/icons";
@@ -11,12 +13,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Badge, Button, Card, Tag, Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 const { Meta } = Card;
 
 function ProductThumb({ product }) {
 	const router = useRouter();
+	const pathname = usePathname();
 	const { data } = usePersistUser();
 	const { user } = data?.data?.data || {};
 	const offPercent =
@@ -53,6 +56,16 @@ function ProductThumb({ product }) {
 		}
 	};
 
+	const handleLike = async () => {
+		try {
+			const { message } = await like(product._id);
+			toast.success(message);
+			router.refresh();
+		} catch (error) {
+			toast.error(error?.response?.data?.message);
+		}
+	};
+
 	return (
 		<Badge.Ribbon
 			className={`${offPercent === 0 ? "hidden" : ""}`}
@@ -73,7 +86,7 @@ function ProductThumb({ product }) {
 						src={product.imageLink}
 						width={100}
 						height={56}
-						className="object-contain h-52"
+						className="object-contain h-52 pt-2"
 					/>
 				}
 				actions={[
@@ -87,6 +100,20 @@ function ProductThumb({ product }) {
 								router.push(`/products/${product.slug}`);
 							}}
 						/>
+					</Tooltip>,
+					<Tooltip
+						title={product.isLiked ? "Unlike" : "Like"}
+						key="details"
+						color="#003254"
+					>
+						{product.isLiked ? (
+							<HeartFilled
+								style={{ color: "red" }}
+								onClick={handleLike}
+							/>
+						) : (
+							<HeartOutlined onClick={handleLike} />
+						)}
 					</Tooltip>,
 					<Tooltip
 						title={
@@ -118,7 +145,11 @@ function ProductThumb({ product }) {
 					<span className="font-semibold text-lg text-primary-800">
 						${product.offPrice}
 					</span>
-					<del className="text-red-400 text-xs">${product.price}</del>
+					{product.discount !== 0 && (
+						<del className="text-red-400 text-xs">
+							${product.price}
+						</del>
+					)}
 				</div>
 				{product.tags.map((tag) => (
 					<Tag

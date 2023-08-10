@@ -20,10 +20,28 @@ export async function middleware(req) {
 				},
 			}
 		).then((res) => res.json());
-        const { user } = data || {};
+		const { user } = data || {};
 		if (!user) return NextResponse.redirect(new URL("/auth", url));
 	} else if (pathname.startsWith("/admin")) {
-		console.log("[Admin Request]");
+		let cookieStr = "";
+		req.cookies.getAll().forEach((cookie) => {
+			cookieStr += `${cookie.name}=${cookie.value}; `;
+		});
+
+		const { data } = await fetch(
+			`${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
+			{
+				method: "GET",
+				credentials: "include",
+				headers: {
+					Cookie: cookieStr,
+				},
+			}
+		).then((res) => res.json());
+		const { user } = data || {};
+		if (!user) return NextResponse.redirect(new URL("/auth", url));
+		if (user && user.role !== "ADMIN")
+			return NextResponse.redirect(new URL("/", req.url));
 	}
 }
 

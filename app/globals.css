@@ -8,3 +8,12 @@
 
 @tailwind components;
 @tailwind utilities;
+
+.ant-avatar img {
+    object-fit: contain;
+}
+
+.ant-popconfirm-buttons {
+    display: flex;
+    justify-content: end;
+}

@@ -17,9 +17,9 @@ const Header = () => {
 		queryKey: ["persist-user"],
 		queryFn: persistUser,
 		retry: false,
-		refetchOnWindowFocus: true,
 	});
 	const { user, cart } = (data && data.data.data) || {};
+
 	const items = [
 		{
 			label: (
@@ -40,13 +40,20 @@ const Header = () => {
 				</Badge>
 			),
 			key: "1",
+		},{
+			label: (
+				<Badge dot={cart?.productDetail.length}>
+					<Link href="/cart">Cart</Link>
+				</Badge>
+			),
+			key: "2",
 		},
 		{
 			type: "divider",
 		},
 		{
 			label: <button>Log out</button>,
-			key: "4",
+			key: "3",
 			danger: true,
 		},
 	];
